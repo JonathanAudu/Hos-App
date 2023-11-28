@@ -1,0 +1,23 @@
+[33mcommit cfa2e01fc3a7003e1020666736dfdea2bf3bafd0[m[33m ([m[1;36mHEAD -> [m[1;32mJonathanAudu[m[33m, [m[1;31morigin/JonathanAudu[m[33m)[m
+Author: jonathanaudu007 <jaudu2@gmail.com>
+Date:   Tue Sep 5 10:33:12 2023 +0100
+
+    feat:search and Pagination
+
+[33mcommit 65e318e4ee31165173ba6ac13972389ded6086cd[m
+Author: jonathanaudu007 <jaudu2@gmail.com>
+Date:   Sat Sep 2 23:23:38 2023 +0100
+
+    feat: users CRUD function Admin able to create,read,update and delete users
+
+[33mcommit ea1e93ce100c1462e16d876933dac983e15601ae[m
+Author: jonathanaudu007 <jaudu2@gmail.com>
+Date:   Thu Aug 24 22:59:31 2023 +0100
+
+    feat: user and admin authentication including forgot password/reset
+
+[33mcommit f6bb33f6a0fb35a4fb6f393fceb16961608d51de[m[33m ([m[1;32mmaster[m[33m)[m
+Author: medhere <edhere.michael@gmail.com>
+Date:   Tue Aug 22 08:17:49 2023 +0100
+
+    1st commit
