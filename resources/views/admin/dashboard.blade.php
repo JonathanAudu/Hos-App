@@ -9,7 +9,7 @@
 
     <main class="main-content position-relative border-radius-lg ">
         @include('admin.nav')
-        <div class="container-fluid py-4">
+        <div class="container-fluid py-2">
             @yield('pages')
         </div>
     </main>

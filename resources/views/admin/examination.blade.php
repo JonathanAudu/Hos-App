@@ -7,12 +7,12 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6 class="mb-0 text-center">All Consultation Details for {{ $consultations[0]->user_name }}</h6>
-                    <h6 class="mb-0 text-center">Consultation ID : {{ $consultations[0]->consult_id }} </h6>
+                    <h6 class="mb-0 text-center">All Examination Details for {{ $examinations[0]->user_name }}</h6>
+                    {{-- <h6 class="mb-0 text-center">examination ID : {{ $examinations[0]->consult_id }} </h6> --}}
                     <hr>
                 </div>
                 <div class="card-body p-0">
-                    <div  class="table-responsive p-0" style="min-height: 600px">
+                    <div class="table-responsive p-0" style="min-height: 600px">
                         <table class="table align-middle mb-0">
                             <thead>
                                 <tr>
@@ -30,6 +30,8 @@
                                         SUGAR</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         TEMPERATURE</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        COMMENTS</th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         CREATED ON</th>
@@ -39,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($consultations as $index => $consultation)
+                                @foreach ($examinations as $index => $examination)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-3 py-3">
@@ -51,49 +53,60 @@
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->weight }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->weight }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->height }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->height }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->bmi }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->bmi }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->blood_pressure }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->blood_pressure }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->pulse_rate }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->pulse_rate }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->blood_sugar }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->blood_sugar }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->temperature }}</h6>
+                                                    <h6 class="text-sm">{{ $examination->temperature }}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex px-3 py-3">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    @if ($examination->comments)
+                                                        <h6 class="text-sm">{{ $examination->comments }}</h6>
+                                                    @else
+                                                        <h6 class="text-sm">N/A</h6>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>
@@ -101,7 +114,7 @@
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="text-sm">
-                                                        {{ \Carbon\Carbon::parse($consultation->created_at)->toDateString() }}
+                                                        {{ \Carbon\Carbon::parse($examination->created_at)->toDateString() }}
                                                     </h6>
                                                 </div>
                                             </div>
@@ -110,14 +123,14 @@
                                             <td>
                                                 <div class="dropdown d-flex justify-content-center">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                        id="menu-{{ $consultation->id }}" data-bs-toggle="dropdown"
+                                                        id="menu-{{ $examination->id }}" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
                                                         Action
                                                     </button>
                                                     <ul class="dropdown-menu"
-                                                        aria-labelledby="menu-{{ $consultation->id }}">
+                                                        aria-labelledby="menu-{{ $examination->id }}">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.user-diagnosis', ['id' => $consultation->id]) }}">View
+                                                                href="{{ route('admin.user-diagnosis', ['id' => $examination->id]) }}">View
                                                                 Diagnosis</a></li>
                                         @endif
                                         {{--                                               <li><a class="dropdown-item" --}}
@@ -125,12 +138,12 @@
                                         {{--                                               <li><a class="dropdown-item" --}}
                                         {{--                                                      href="">lab test result</a></li> --}}
 
-                                        @if ($role->onlyRoles('admin', 'doctor',))
+                                        @if ($role->onlyRoles('admin', 'doctor'))
                                             <li><a class="dropdown-item"
-                                                    href="{{ route('admin.add-diagnosis', ['id' => $consultation->id]) }}">
+                                                    href="{{ route('admin.add-diagnosis', ['id' => $examination->id]) }}">
                                                     Create Diagnosis </a></li>
                                             <li><a class="dropdown-item text-danger"
-                                                    href="{{ route('admin.deleteconsultation', ['id' => $consultations[0]->id]) }}">Delete</a>
+                                                    href="{{ route('admin.deleteexamination', ['id' => $examinations[0]->id]) }}">Delete</a>
                                             </li>
                                         @endif
                                         </ul>

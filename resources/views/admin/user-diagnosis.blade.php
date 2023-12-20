@@ -23,7 +23,7 @@
                             <h5>NO DIAGNOSIS FOR THIS CONSULTATION</h5>
                         </div>
                     @else
-                        <div class="table-responsive" style="min-height: 600px">
+                        <div  class="table-responsive p-0" style="min-height: 600px">
                             <table class="table align-middle mb-0">
                                 <thead>
                                     <tr>

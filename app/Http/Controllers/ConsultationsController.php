@@ -88,9 +88,8 @@ class ConsultationsController extends Controller
         if ($existingConsultation) {
             $consultId = $existingConsultation->consult_id;
         } else {
-            $userName = strtoupper(substr($user->name, 0, 3));
             $randomDigits = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
-            $consultId = $userName . '-' . $randomDigits;
+            $consultId = 'SUMASTh' . '-' . $randomDigits;
         }
 
         $consultation = new Consultation([

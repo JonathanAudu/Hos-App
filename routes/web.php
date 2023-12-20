@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\UserPaymentController;
 use App\Models\Consultation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DrugController;
@@ -10,12 +9,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\LabTestController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\PaymentListController;
+use App\Http\Controllers\UserPaymentController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ConsultationsController;
-use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,21 @@ Route::controller(AdminController::class)
         Route::get('allpayments', 'allPayments')->name('allpayments');
         Route::put('status/{id}/update', 'updatePaymentStatus')->name('paymentstatus.update');
     });
+
+
+Route::controller(ExaminationController::class)
+    ->prefix('admin')->name('admin.')
+    ->middleware(['auth', 'role:all'])
+    ->group(function () {
+        Route::post('/examinations/create', 'create')->name('createexamination');
+        Route::get('/examinations/{id}', 'indexForm')->name('addexamination');
+        Route::get('/examinations', 'index')->name('viewexaminations');
+        Route::get('/examination/{id}/edit', 'editForm')->name('editexamination');
+        Route::put('/examination/{id}/update', 'update')->name('updateexamination');
+        Route::get('/examination/delete/{id}', 'delete')->name('deleteexamination');
+        Route::get('/examination/{id}', 'getExamination')->name('examination');
+    });
+
 
 
 Route::controller(ConsultationsController::class)
@@ -160,11 +176,11 @@ Route::controller(PaymentListController::class)
     ->middleware(['auth', 'role:all'])
     ->group(function () {
         Route::get('/paymentlist/create', 'form')->name('add-paymentlist');
-         Route::post('/paymentlist/create', 'store')->name('paymentlist.create');
-         Route::get('/paymentlists', 'index')->name('viewpaymentlist');
-         Route::get('paymentlist/{id}', 'updateForm')->name('editpaymentlist');
-         Route::put('paymentlist/{id}', 'update')->name('paymentlist.update');
-         Route::get('paymentlist/delete/{id}', 'delete')->name('paymentlist.delete');
+        Route::post('/paymentlist/create', 'store')->name('paymentlist.create');
+        Route::get('/paymentlists', 'index')->name('viewpaymentlist');
+        Route::get('paymentlist/{id}', 'updateForm')->name('editpaymentlist');
+        Route::put('paymentlist/{id}', 'update')->name('paymentlist.update');
+        Route::get('paymentlist/delete/{id}', 'delete')->name('paymentlist.delete');
     });
 
 
@@ -181,7 +197,6 @@ Route::controller(UserController::class)
         Route::get('download/{id}', 'download')->name('resultdownload');
         Route::get('viewdrugprescription/{id}', 'viewdrugprescription')->name('showprescdrug');
         Route::get('viewpayments', 'viewpayments')->name('payment');
-
     });
 
 
@@ -193,9 +208,6 @@ Route::controller(UserPaymentController::class)
         Route::get('/payments/{id}', 'createPaymentForm')->name('payments');
         Route::post('/payment', 'storePayment')->name('payment.store');
         Route::get('/{user_id}/payment', 'index')->name('payment.show');
-
-
-
     });
 
 Route::controller(AccountController::class)
@@ -211,7 +223,7 @@ Route::controller(AccountController::class)
     });
 
 
-    Route::middleware('auth')
+Route::middleware('auth')
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -219,4 +231,3 @@ Route::controller(AccountController::class)
         Route::get('payments/confirm/{id}', [PaymentController::class, 'confirmPayment'])->name('payments.confirm');
         Route::get('/myPayment', [PaymentController::class, 'viewUserPayments'])->name('payments.user-payment');
     });
-

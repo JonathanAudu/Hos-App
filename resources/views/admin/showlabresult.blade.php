@@ -12,7 +12,7 @@
 
                 <div class="card-body p-0">
                     @if ($labtest)
-                        <div class="table-responsive" style="min-height: 600px">
+                        <div  class="table-responsive p-0" style="min-height: 600px">
                             <table class="table table-bordered align-middle mb-3 mx-sm-auto my-3">
                                 <tbody>
                                 <tr>

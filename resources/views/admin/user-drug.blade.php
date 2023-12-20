@@ -29,7 +29,7 @@
                             <h5>NO RESULT FOR THIS DIAGNOSIS</h5>
                         </div>
                     @else
-                        <div class="table-responsive">
+                        <div  class="table-responsive p-0" style="min-height: 600px">
                             <table class="table align-middle mb-0">
                                 <thead>
                                 <tr>

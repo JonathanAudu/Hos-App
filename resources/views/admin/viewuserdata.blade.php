@@ -88,15 +88,15 @@
                                             @endif
                                             @if ($role->onlyRoles('admin', 'front-desk', 'nurse'))
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('admin.addconsultation', ['id' => $user->id]) }}">Create
-                                                        Consultation</a></li>
+                                                        href="{{ route('admin.addexamination', ['id' => $user->id]) }}">Create
+                                                        Examination</a></li>
                                             @endif
 
 
                                             @if ($role->onlyRoles('admin', 'doctor', 'nurse', 'front-desk'))
                                                 <li><a class="dropdown-item"
-                                                        href="{{ route('admin.viewconsultations', ['type' => 'user', 'id' => $user->user_id]) }}">View
-                                                        Consultations</a></li>
+                                                        href="{{ route('admin.viewexaminations', ['type' => 'user', 'id' => $user->user_id]) }}">View
+                                                        Examinations</a></li>
                                             @endif
                                         </ul>
                                     </div>

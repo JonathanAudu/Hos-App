@@ -2,13 +2,13 @@
 
 @section('pages')
     <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-6 mb-xl-2 mb-4">
             <div class="card">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Users</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Patients</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $user_count }}
                                 </h5>
@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-4 text-end">
                             <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                <i class="ni ni-single-02 text-lg opacity-10" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
@@ -39,8 +39,104 @@
                             </div>
                         </div>
                         <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Staffs</p>
+                                <h5 class="font-weight-bolder">
+                                    {{ $staff_count }}
+                                </h5>
+                                {{-- <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
+                                </p> --}}
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-badge text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Revenue</p>
+                                <h5 class="font-weight-bolder">
+                                    5
+                                </h5>
+                                {{-- <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
+                                </p> --}}
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                <i class="ni ni-chart-bar-32 text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Drugs</p>
+                                <h5 class="font-weight-bolder">
+                                   {{ $drugCount }}
+                                </h5>
+                                {{-- <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
+                                </p> --}}
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
                             <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                                <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                                <i class="ni ni-ui-04 text-lg opacity-10" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="numbers">
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Lab Tests</p>
+                                <h5 class="font-weight-bolder">
+                                    {{ $labTestCount }}
+                                </h5>
+                                {{-- <p class="mb-0">
+                                    <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
+                                </p> --}}
+                            </div>
+                        </div>
+                        <div class="col-4 text-end">
+                            <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
+                                <i class="ni ni-ambulance text-lg opacity-10" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
