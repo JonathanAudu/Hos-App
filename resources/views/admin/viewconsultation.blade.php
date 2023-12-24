@@ -73,6 +73,7 @@
                             </thead>
                             <tbody>
                                 @forelse ($latestConsultations as $consultation)
+
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
@@ -80,22 +81,16 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $consultation->user->name }}</h6>
-                                                    <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $consultation->user->gender }}</p>
-                                                    <p class="text-xs font-weight-bold mb-0">dob:
-                                                        {{ $consultation->user->dob }}</p>
-                                                    <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $consultation->user->email }}</p>
-                                                    <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $consultation->user->phone }}</p>
-                                                </div>
+                                            <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $consultation->examination->user->name }}</h6>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $consultation->examination->user->gender }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">DOB: {{ $consultation->examination->user->dob }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $consultation->examination->user->email }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $consultation->examination->user->phone }}</p>
                                             </div>
                                         </td>
                                         <td>
-                                            <h6 class="mb-0 text-sm px-4">{{ $consultation->consult_id }}</h6>
+                                            <h6 class="mb-0 text-sm px-4">{{ $consultation->examination->consult_id }}</h6>
                                         </td>
                                         @if ($role->onlyRoles('admin', 'front-desk'))
                                             <td>
@@ -117,8 +112,8 @@
                                                     <ul class="dropdown-menu"
                                                         aria-labelledby="menu-{{ $consultation->id }}">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.consultation', ['id' => $consultation->user_id]) }}">View
-                                                                Consultation for {{ $consultation->user->name }}
+                                                                href="{{ route('admin.consultation', ['id' => $consultation->examination_id]) }}">View
+                                                                Consultation for {{ $consultation->examination->user->name }}
                                                             </a>
                                                         </li>
                                                     </ul>

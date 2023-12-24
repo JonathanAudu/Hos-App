@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('drugs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('labtest_id');
+            $table->foreignId('labtest_id')->constrained('labtests')->cascadeOnDelete();
             $table->string('name');
+            $table->string('comments')->nullable();
             $table->string('created_by');
             $table->timestamps();
         });

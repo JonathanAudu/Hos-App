@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Helpers\AuthHelper;
 use App\Models\Consultation;
+use App\Models\Examination;
 use Illuminate\Support\Facades\DB;
 
 class ConsultationsController extends Controller
@@ -19,42 +20,46 @@ class ConsultationsController extends Controller
 
     public function index()
     {
-        // Fetch the latest consultations for each user
-        $consultations = Consultation::select('user_id', DB::raw('MAX(created_at) as latest_date'))
-            ->groupBy('user_id');
+        // Fetch the latest consultations for each examination_id
+        $latestConsultations = Consultation::with(['examination.user:id,name,email,phone,dob,gender'])
+            ->select('examination_id', DB::raw('MAX(created_at) as latest_date'))
+            ->groupBy('examination_id')
+            ->get();
 
-        $latestConsultations = Consultation::whereIn('id', function ($query) use ($consultations) {
-            $query->select(DB::raw('MAX(id)'))
+        $latestConsultations = Consultation::whereIn('created_at', function ($query) use ($latestConsultations) {
+            $query->select(DB::raw('MAX(created_at)'))
                 ->from('consultations')
-                ->groupBy('user_id')
-                ->get();
-        })->with(['user:id,name,email,phone,dob,gender'])->get();
+                ->whereIn('examination_id', $latestConsultations->pluck('examination_id'))
+                ->groupBy('examination_id');
+        })->get();
+
 
 
         return view('admin.viewconsultation', compact('latestConsultations'));
     }
 
 
-    public function getConsultation($user_id)
+    public function getConsultation($examination_id)
     {
         $consultations = DB::table('consultations')
-            ->select('consultations.*', 'users.name as user_name') // Select the name from users
-            ->join('users', 'consultations.user_id', '=', 'users.id')
-            ->where('consultations.user_id', $user_id) // Use 'consultations.user_id' to filter by user ID
+            ->select('consultations.*', 'users.name as user_name')
+            ->join('examinations', 'consultations.examination_id', '=', 'examinations.id')
+            ->join('users', 'examinations.user_id', '=', 'users.id')
+            ->where('consultations.examination_id', $examination_id)
             ->get();
 
-        //        dd($consultations[0]->id);
         return view('admin.consultation', compact('consultations'));
     }
 
 
 
 
+
     public function indexForm($id)
     {
-        $user = User::find($id);
-
-        return view('admin.addconsultation', compact('user'));
+        $examination = Examination::find($id);
+        $user = $examination->user;
+        return view('admin.addconsultation', compact('examination', 'user'));
     }
 
 
@@ -69,43 +74,26 @@ class ConsultationsController extends Controller
 
     public function create(Request $request)
     {
-        $request->validate([
-            'weight' => 'required|numeric',
-            'height' => 'required|numeric',
-            'bmi' => 'required|numeric',
-            'blood_pressure' => 'required|string',
-            'pulse_rate' => 'required|numeric',
-            'blood_sugar' => 'required|numeric',
-            'temperature' => 'required|numeric',
-            'assigned_doctor' => 'nullable|string',
-        ]);
+        $examinationId = $request->input('examination_id');
+        $userId =  auth()->user()->name;
 
-        $user_id = $request->input('user_id');
-        $user = User::find($user_id);
-
-        $existingConsultation = Consultation::where('user_id', $user_id)->first();
+        $existingConsultation = Consultation::where('examination_id', $examinationId)
+            ->where('created_by', $userId)
+            ->first();
 
         if ($existingConsultation) {
-            $consultId = $existingConsultation->consult_id;
-        } else {
-            $randomDigits = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
-            $consultId = 'SUMASTh' . '-' . $randomDigits;
+            return back()->with('error', 'error');
         }
 
-        $consultation = new Consultation([
-            'user_id' => $user_id,
-            'weight' => $request->input('weight'),
-            'height' => $request->input('height'),
-            'bmi' => $request->input('bmi'),
-            'blood_pressure' => $request->input('blood_pressure'),
-            'pulse_rate' => $request->input('pulse_rate'),
-            'blood_sugar' => $request->input('blood_sugar'),
-            'temperature' => $request->input('temperature'),
-            'assigned_doctor' => $request->input('assigned_doctor'),
-            'created_by' => auth()->id(),
-            'consult_id' => $consultId,
+        $validatedData = $request->validate([
+            'examination_id' => 'required|exists:examinations,id',
+            'diagnosis' => 'sometimes|string',
+            'provisional_diagnosis' => 'sometimes|string',
+            'comments' => 'nullable|string',
         ]);
 
+        $consultation = new Consultation($validatedData);
+        $consultation->created_by = $userId;
         $consultation->save();
 
         return redirect()->route('admin.viewconsultations')->with('succes', 'Succes');

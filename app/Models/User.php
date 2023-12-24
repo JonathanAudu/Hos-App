@@ -40,10 +40,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function consultations()
-    {
-        return $this->hasMany(Consultation::class, 'user_id');
-    }
 
     public function examinations()
     {

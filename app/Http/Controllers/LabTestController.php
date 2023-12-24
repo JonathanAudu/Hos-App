@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LabTest;
-use App\Models\Diagnosis;
+use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,32 +11,32 @@ class LabTestController extends Controller
 {
     public function labForm($id)
     {
-        $diagnosis = Diagnosis::findOrFail($id);
-        return view('admin.add-labtest', compact('diagnosis'));
+        $consultation = Consultation::findOrFail($id);
+        return view('admin.add-labtest', compact('consultation'));
     }
 
 
     public function updateForm($id)
     {
-        $labtest = LabTest::with('diagnosis')->find($id);
-        //        dd($labtest->diagnosis->consultation->user->name);
+        $labtest = LabTest::with('consultation')->find($id);
+        //        dd($labtest->consultation->examination->user->name);
         return view('admin.update-labtest', compact('labtest'));
     }
 
 
     public function store(Request $request)
     {
-        $diagnosisId = $request->input('diagnosis_id');
+        $consultationId = $request->input('consultation_id');
         $userId = auth()->user()->name;
 
-        $existingLabtest = LabTest::where('diagnosis_id', $diagnosisId)->first();
+        $existingLabtest = LabTest::where('consultation_id', $consultationId)->first();
 
         if ($existingLabtest) {
             return back()->with('error', 'error');
         }
 
         $validatedData = $request->validate([
-            'diagnosis_id' => 'required|exists:diagnosis,id',
+            'consultation_id' => 'required|exists:consultations,id',
             'test_name' => 'required|string',
             'comments' => 'required|string',
             'status' => 'sometimes|string',
@@ -62,17 +62,18 @@ class LabTestController extends Controller
         $labtest->lab_result = $fileName;
         $labtest->save();
 
-        return redirect()->route('admin.user-diagnosis', ['id' => $labtest->diagnosis->id])->with('success', 'success');
+        return redirect()->route('admin.user-labtest')->with('success', 'success');
     }
 
 
     public function labResult($id)
     {
-        $labtest = LabTest::where('diagnosis_id', $id)->first();
-        $diagnosis = Diagnosis::with('consultation')->find($id);
-        //        dd($labtest->diagnosis->consultation->user->name);
+        $labtest = LabTest::where('consultation_id', $id)->first();
+        $consultation = Consultation::with('examination')->find($id);
+        // dd($consultation->examination->consult_id);
+            //    dd($labtest);
 
-        return view('admin.user-labtest', compact('labtest', 'diagnosis'));
+        return view('admin.user-labtest', compact('labtest', 'consultation'));
     }
 
 
@@ -148,7 +149,7 @@ class LabTestController extends Controller
     $labtest->created_by = $userId;
     $labtest->save($validatedData);
 
-    return redirect()->route('admin.user-labtest', ['id' => $labtest->diagnosis->id])->with('updated', 'updated');
+    return redirect()->route('admin.user-labtest', ['id' => $labtest->consultation->id])->with('updated', 'updated');
 }
 
 

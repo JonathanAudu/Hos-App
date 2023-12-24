@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->enum('payment_type', ['Examination', 'Consultation', 'Labtest', 'Drug']);
             $table->string('payment_desc');
             $table->decimal('amount', 8, 2);
-            $table->enum('payment_type', ['pos', 'transfer', 'cash']);
+            $table->enum('confirm', ['verified', 'unverified'])->default('unverified');
             $table->enum('status', ['paid', 'failed', 'pending'])->default('pending');
             $table->timestamps();
         });

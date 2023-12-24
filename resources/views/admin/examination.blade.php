@@ -130,8 +130,8 @@
                                                     <ul class="dropdown-menu"
                                                         aria-labelledby="menu-{{ $examination->id }}">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.user-diagnosis', ['id' => $examination->id]) }}">View
-                                                                Diagnosis</a></li>
+                                                                href="{{ route('admin.consultation', ['id' => $examination->id]) }}">View
+                                                                Consultation/Diagnosis</a></li>
                                         @endif
                                         {{--                                               <li><a class="dropdown-item" --}}
                                         {{--                                                      href="">create lab test</a></li> --}}
@@ -140,8 +140,8 @@
 
                                         @if ($role->onlyRoles('admin', 'doctor'))
                                             <li><a class="dropdown-item"
-                                                    href="{{ route('admin.add-diagnosis', ['id' => $examination->id]) }}">
-                                                    Create Diagnosis </a></li>
+                                                    href="{{ route('admin.addconsultation', ['id' => $examination->id]) }}">
+                                                    Create Consultation/Diagnosis </a></li>
                                             <li><a class="dropdown-item text-danger"
                                                     href="{{ route('admin.deleteexamination', ['id' => $examinations[0]->id]) }}">Delete</a>
                                             </li>

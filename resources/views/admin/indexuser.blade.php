@@ -8,9 +8,9 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Consultations</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Examinations</p>
                                 <h5 class="font-weight-bolder">
-                                    {{ $consultationCount }}
+                                    {{ $examinationCount }}
                                 </h5>
                             </div>
                         </div>
@@ -30,39 +30,39 @@
             <div class="card">
                 <div class="card-header pb-0 p-3">
                     <div class="d-flex justify-content-between">
-                        <h6 class="mb-2">Latest Consultations</h6>
+                        <h6 class="mb-2">Latest Examinations</h6>
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table align-items-center">
                         <tbody>
-                            @forelse ($consultations as $consultation)
+                            @forelse ($examinations as $examination)
                                 <tr>
                                     <td class="w-30">
                                         <div class="d-flex px-2 py-1 align-items-center">
                                             <div class="ms-4">
-                                                <p class="text-sm font-weight-bold mb-0">{{ $consultation->user->name }}</p>
-                                                <h6 class="text-xs mb-0">{{ $consultation->user->gender }}</h6>
-                                                <h6 class="text-xs mb-0">DOB: {{ $consultation->user->dob }}</h6>
+                                                <p class="text-sm font-weight-bold mb-0">{{ $examination->user->name }}</p>
+                                                <h6 class="text-xs mb-0">{{ $examination->user->gender }}</h6>
+                                                <h6 class="text-xs mb-0">DOB: {{ $examination->user->dob }}</h6>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">State</p>
-                                            <h6 class="text-sm mb-0">{{ $consultation->user->state }}</h6>
+                                            <h6 class="text-sm mb-0">{{ $examination->user->state }}</h6>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">Consulted By</p>
-                                            <h6 class="text-sm mb-0">{{ $consultation->createdBy->name }}</h6>
+                                            <h6 class="text-sm mb-0">{{ $examination->createdBy->name }}</h6>
                                         </div>
                                     </td>
                                     <td class="align-middle text-sm">
                                         <div class="col text-center">
                                             <p class="text-xs font-weight-bold mb-0">Consulted On:</p>
-                                            <h6 class="text-sm mb-0">{{ $consultation->created_at->toDateString() }}</h6>
+                                            <h6 class="text-sm mb-0">{{ $examination->created_at->toDateString() }}</h6>
                                         </div>
                                     </td>
                                 </tr>

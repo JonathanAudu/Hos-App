@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('examinations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('consult_id');
             $table->decimal('weight')->default(0);
             $table->decimal('height')->default(0);
             $table->decimal('bmi')->default(0);

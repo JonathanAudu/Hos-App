@@ -23,7 +23,7 @@ class ExaminationController extends Controller
          $examinations = Examination::select('user_id', DB::raw('MAX(created_at) as latest_date'))
              ->groupBy('user_id');
 
-         $latestExaminations = Examination::whereIn('id', function ($query) use ($examinations) {
+         $latestexaminations = Examination::whereIn('id', function ($query) use ($examinations) {
              $query->select(DB::raw('MAX(id)'))
                  ->from('examinations')
                  ->groupBy('user_id')
@@ -31,7 +31,7 @@ class ExaminationController extends Controller
          })->with(['user:id,name,email,phone,dob,gender'])->get();
 
 
-         return view('admin.viewexamination', compact('latestExaminations'));
+         return view('admin.viewexamination', compact('latestexaminations'));
      }
 
 
@@ -40,7 +40,8 @@ class ExaminationController extends Controller
          $examinations = DB::table('examinations')
              ->select('examinations.*', 'users.name as user_name') // Select the name from users
              ->join('users', 'examinations.user_id', '=', 'users.id')
-             ->where('examinations.user_id', $user_id) // Use 'examinations.user_id' to filter by user ID
+             ->where('examinations.user_id', $user_id)
+             ->orderBy('created_at', 'desc') 
              ->get();
 
          //        dd($examinations[0]->id);
@@ -58,7 +59,7 @@ class ExaminationController extends Controller
 
     public function editForm($id)
     {
-        $Examination = Examination::find($id);
+        $examination = Examination::find($id);
         // Fetch all doctors
         $doctors = User::where('role', 'doctor')->get();
 
@@ -82,6 +83,14 @@ class ExaminationController extends Controller
 
         $user_id = $request->input('user_id');
         $user = User::find($user_id);
+        $existingExamination = Examination::where('user_id', $user_id)->first();
+
+        if ($existingExamination) {
+            $consultId = $existingExamination->consult_id;
+        } else {
+            $randomDigits = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
+            $consultId = 'SUMASTH' . '-' . $randomDigits;
+        }
 
         $examination = new Examination([
             'user_id' => $user_id,
@@ -95,11 +104,34 @@ class ExaminationController extends Controller
             'comments' => $request->input('comments'),
             'assigned_doctor' => $request->input('assigned_doctor'),
             'created_by' => auth()->id(),
+            'consult_id' => $consultId,
         ]);
 
         $examination->save();
 
         return redirect()->route('admin.viewexaminations')->with('succes', 'Succes');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'assigned_doctor' => 'sometimes|nullable|string',
+        ]);
+
+        $examination = Examination::find($id);
+        $examination->update([
+            'assigned_doctor' => $request->input('assigned_doctor'),
+        ]);
+
+        return redirect()->route('admin.viewexaminations')->with('success', 'success');
+    }
+
+
+    public function delete($id)
+    {
+        $examination = Examination::find($id);
+        $examination->delete();
+        return redirect()->route('admin.viewexaminations')->with('delete', 'delete');
     }
 
 }

@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Consultation </h6>
+                    <h6>CONSULTATIONS </h6>
                 </div>
                 @if (session('updated'))
                 <div class="alert alert-success text-center">
@@ -23,14 +23,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">HEIGHT
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">BMI</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">BLOOD
-                                        PRESSURE</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">PULSE
-                                        RATE</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">BLOOD
-                                        SUGAR</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        TEMPERATURE</th>
+
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NAME OF
                                         DOCTOR</th>
                                     <th
@@ -58,56 +51,29 @@
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->weight }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->diagnosis }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->height }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->provisional_diagnosis }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->bmi }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->comments }}</h6>
                                                 </div>
                                             </div>
                                         </td>
+
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->blood_pressure }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->pulse_rate }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->blood_sugar }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->temperature }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->assigned_doctor }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->created_by }}</h6>
                                                 </div>
                                             </div>
                                         </td>
@@ -140,10 +106,10 @@
                                                     </li>
                                                     @endif --}}
                                                     <a class="dropdown-item"
-                                                        href="{{ route('user.showdiagnosis', ['consultation_id' => $consultation->id]) }}">
+                                                        href="">
                                                         <button type="button" class="btn btn-primary"
                                                             style="width: 100%; margin-bottom: 0px;">
-                                                            View Diagnosis
+                                                            View
                                                         </button>
                                                     </a>
                                                 </ul>

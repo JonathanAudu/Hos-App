@@ -16,9 +16,9 @@ class Examination extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function diagnosis()
+    public function consultation()
     {
-        return $this->hasOne(Diagnosis::class);
+        return $this->hasMany(Consultation::class, 'examination_id');
     }
 
     public function userpayments()

@@ -192,7 +192,8 @@ Route::controller(UserController::class)
         Route::get('/', 'index')->name('index');
         Route::get('/viewsubscription/{id?}', 'viewsubscription')->name('viewsubscription');
         Route::get('/viewconsultations', 'viewconsultations')->name('viewconsultations');
-        Route::get('diagnosis/{consultation_id}', 'show')->name('showdiagnosis');
+        Route::get('/viewexaminations', 'viewexaminations')->name('viewexaminations');
+        Route::get('diagnosis/{examination_id}', 'show')->name('showdiagnosis');
         Route::get('labresult/{id}', 'labResult')->name('showlabresult');
         Route::get('download/{id}', 'download')->name('resultdownload');
         Route::get('viewdrugprescription/{id}', 'viewdrugprescription')->name('showprescdrug');

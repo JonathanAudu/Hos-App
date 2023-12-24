@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Examination </h6>
+                    <h6>EXAMINATIONS </h6>
                 </div>
                 @if (session('updated'))
                     <div class="alert alert-success text-center">
@@ -156,7 +156,7 @@
                                                         href="{{ route('user.showdiagnosis', ['examination_id' => $examination->id]) }}">
                                                         <button type="button" class="btn btn-primary"
                                                             style="width: 100%; margin-bottom: 0px;">
-                                                            View Diagnosis
+                                                            View Consultation/Diagnosis
                                                         </button>
                                                     </a>
                                                 </ul>

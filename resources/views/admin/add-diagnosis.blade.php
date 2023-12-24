@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <form action="{{ route('admin.creatediagnosis') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="consultation_id" value="{{ $consultation->id }}">
+                        <input type="hidden" name="examination_id" value="{{ $examination->id }}">
                         <div class="mb-3">
                             <label for="examination" class="form-label">Examination:</label>
                             <textarea class="form-control" id="examination" name="examination" rows="4"></textarea>

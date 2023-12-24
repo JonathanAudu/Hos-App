@@ -11,8 +11,9 @@ class PrescriptionController extends Controller
 {
     public function form($id)
     {
-        $drug = Drug::findOrFail($id);
-        $prescription = $drug->labtest->diagnosis->consultation;
+        $drug = Drug::with('labtest')->findOrFail($id);
+        $prescription = $drug->labtest->consultation->examination;
+        // dd($prescription->user->name);
 
         return view('admin.add-prescription', compact('drug', 'prescription'));
     }
@@ -44,16 +45,15 @@ class PrescriptionController extends Controller
 
     public function show($id)
     {
-        $prescription = Prescription::where('drug_id', $id)->first();
-        $drug = Drug::with('labtest')->find($id);
-        $prescribedUser = $drug->labtest->diagnosis->consultation;
+        $prescription = Prescription::with('drug')->where('drug_id', $id)->first();
+        $prescribedUser = $prescription->drug->labtest->consultation->examination;
 
-        return view('admin.user-prescription', compact('prescription', 'drug', 'prescribedUser'));
+        return view('admin.user-prescription', compact('prescription', 'prescribedUser'));
     }
 
     public function updateForm($id){
         $prescription = Prescription::with('drug')->find($id);
-        $prescribedUser = $prescription->drug->labtest->diagnosis->consultation;
+        $prescribedUser = $prescription->drug->labtest->consultation->examination;
         return view('admin.update-prescription', compact('prescription',  'prescribedUser'));
 
     }

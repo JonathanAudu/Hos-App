@@ -13,12 +13,13 @@ class LabTest extends Model
 
 
 
-    public function diagnosis() {
-        return $this->belongsTo(Diagnosis::class, 'diagnosis_id');
+    public function consultation()
+    {
+        return $this->belongsTo(Consultation::class, 'consultation_id');
     }
 
     public function drug()
     {
-        return $this->hasOne(Drug::class);
+        return $this->hasOne(Drug::class, 'labtest_id');
     }
 }

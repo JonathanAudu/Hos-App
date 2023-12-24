@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 
 class DrugController extends Controller
 {
-    public function drugForm($id){
-        $labtest = LabTest::findOrFail($id);
-        $drug = $labtest->diagnosis->consultation;
-//        dd($drug->user->name);
+    public function drugForm($id)
+    {
+        $labtest = LabTest::with('consultation')->find($id);
+        $drug = $labtest->consultation->examination;
+
+        // dd($drug->user->name);
+
         return view('admin.add-drug', compact('labtest', 'drug'));
     }
 
@@ -20,6 +23,7 @@ class DrugController extends Controller
         $validatedData = $request->validate([
             'labtest_id' => 'required|exists:labtests,id',
             'name' => 'required|string',
+            'comments' => 'sometimes|string',
         ]);
 
         $userId = auth()->user()->name;
@@ -42,30 +46,33 @@ class DrugController extends Controller
 
 
 
-    public function show($id){
-    $drug = Drug::where('labtest_id', $id)->first();
-    $labtest = LabTest::with('diagnosis')->find($id);
-    $drugUser = $labtest->diagnosis->consultation;
-//        dd($drugUser->user->name);
-    return view('admin.user-drug', compact('drug', 'labtest', 'drugUser'));
+    public function show($id)
+    {
+        $drug = Drug::with('labtest')->where('labtest_id', $id)->first();
 
+        $drugUser = $drug->labtest->consultation->examination;
+            //    dd($drugUser);
+        return view('admin.user-drug', compact('drug', 'drugUser'));
     }
 
 
-    public function updateForm($id){
+    public function updateForm($id)
+    {
         $drug = Drug::with('labtest')->find($id);
-        $drugUser = $drug->labtest->diagnosis->consultation->user;
-////                dd($drugUser);
+        $drugUser = $drug->labtest->consultation->examination->user;
+        ////                dd($drugUser);
         return view('admin.update-drug', compact('drug', 'drugUser'));
     }
 
 
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $drug = Drug::findOrFail($id);
 
         $validatedData = $request->validate([
             'name' => 'sometimes|string',
+            'comments' => 'sometimes|string',
         ]);
         $drug->update($validatedData);
 
@@ -73,7 +80,8 @@ class DrugController extends Controller
     }
 
 
-    public function delete($id){
+    public function delete($id)
+    {
         $drug = Drug::find($id);
         $drug->delete();
         return back()->with('delete', 'delete');

@@ -40,7 +40,12 @@
 
                         <div class="mb-3">
                             <label for="name" class="form-label">NAME OF DRUG(S)</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                            <textarea class="form-control" id="name" name="name">{{ old('name') }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="comments" class="form-label">COMMENTS:</label>
+                            <textarea class="form-control" id="comments" name="comments">{{ old('comments') }}</textarea>
                         </div>
 
                         <div class="text-center">

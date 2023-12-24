@@ -102,17 +102,38 @@
 
             @if ($role->onlyRoles('admin', 'front-desk', 'nurse','doctor', 'lab-scientist', 'pharmacy'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.viewconsultations') }}">
+                    <a class="nav-link" href="{{ route('admin.viewexaminations') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">View Consultations</span>
+                        <span class="nav-link-text ms-1">View Examinations</span>
                     </a>
                 </li>
             @endif
 
+            @if ($role->onlyRoles('admin', 'front-desk', 'nurse','doctor', 'lab-scientist', 'pharmacy'))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.viewconsultations') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">View Consultations</span>
+                </a>
+            </li>
+        @endif
+
             @if ($role->onlyRoles('user'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('user.viewexaminations') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">My Examinations</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('user.viewconsultations') }}">
                         <div

@@ -13,7 +13,7 @@ class Drug extends Model
 
     public function labtest()
     {
-        return $this->belongsTo(LabTest::class,  'labtest_id');
+        return $this->belongsTo(LabTest::class, 'labtest_id');
     }
 
     public function prescription()

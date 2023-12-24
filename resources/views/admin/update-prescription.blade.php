@@ -29,11 +29,6 @@
                             <small class="text-muted">Please enter the drug names and dosage in this format. Example: Paracetamol : 2 morning, 2 afternoon, and 2 evening.</small>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="handled_by" class="form-label">Handled By</label>
-                            <input type="text" class="form-control" id="handled_by" name="handled_by" value="{{ $prescription->handled_by }}">
-                        </div>
-
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary my-4 mb-2">Update Prescription</button>
                         </div>

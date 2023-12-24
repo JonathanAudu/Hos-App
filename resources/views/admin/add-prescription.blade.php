@@ -12,14 +12,14 @@
                     </div>
                 @endif
                 <div class="card-header text-center pt-4">
-                    <h5>Add Prescription For {{$drug->name}}</h5>
-                    <h5>Patient Name : {{$prescription->user->name}}</h5>
-                    <h5>Consult ID : {{$prescription->consult_id}}</h5>
+                    <h5>Add Prescription For {{ $drug->name }}</h5>
+                    <h5>Patient Name : {{ $prescription->user->name }}</h5>
+                    <h5>Consult ID : {{ $prescription->consult_id }}</h5>
                 </div>
                 <div class="card-body">
-                    <form role="form" action="{{route('admin.prescription.create')}}" method="POST">
+                    <form role="form" action="{{ route('admin.prescription.create') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="drug_id" value="{{$drug->id}}">
+                        <input type="hidden" name="drug_id" value="{{ $drug->id }}">
 
                         <div class="mb-3">
                             <label for="comments" class="form-label">Comments</label>
@@ -29,7 +29,8 @@
                         <div class="mb-3">
                             <label for="dosage" class="form-label">Dosage</label>
                             <textarea class="form-control" id="dosage" name="dosage" required></textarea>
-                            <small class="text-muted">Please enter the drug names and dosage in this format. Example: Paracetamol : 2 morning, 2 afternoon and 2 evening.</small>
+                            <small class="text-muted">Please enter the drug names and dosage in this format. Example:
+                                Paracetamol : 2 morning, 2 afternoon and 2 evening.</small>
                         </div>
 
                         <div class="text-center">

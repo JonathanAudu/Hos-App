@@ -34,6 +34,7 @@
                                 <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DRUG NAME(s)</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">COMMENTS</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CREATED BY</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CREATED ON</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ACTION</th>
@@ -45,6 +46,13 @@
                                         <div class="d-flex px-3 py-3">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm">{{$drug->name}}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-3 py-3">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <h6 class="text-sm">{{$drug->comments}}</h6>
                                             </div>
                                         </div>
                                     </td>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('consultation_id')->constrained('consultations')->cascadeOnDelete();
             $table->string('examination')->nullable();
             $table->string('provisional_diagnosis')->nullable();
+            $table->string('comments')->nullable();
             $table->string('created_by');
             $table->timestamps();
         });

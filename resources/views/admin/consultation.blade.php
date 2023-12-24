@@ -7,35 +7,44 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6 class="mb-0 text-center">All Consultation Details for {{ $consultations[0]->user_name }}</h6>
-                    <h6 class="mb-0 text-center">Consultation ID : {{ $consultations[0]->consult_id }} </h6>
+                    <h6 class="mb-0 text-center">All Consultation/Diagnosis Details for </h6>
+                    <h6 class="mb-0 text-center">Consultation ID : </h6>
                     <hr>
                 </div>
                 <div class="card-body p-0">
-                    <div  class="table-responsive p-0" style="min-height: 600px">
+                    <div class="table-responsive p-0" style="min-height: 600px">
                         <table class="table align-middle mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S/N</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">WEIGHT
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S/N
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">HEIGHT
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">BMI</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">BLOOD
-                                        PRESSURE</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">PULSE
-                                        RATE</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">BLOOD
-                                        SUGAR</th>
+
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        TEMPERATURE</th>
+                                        Diagnosis
+                                    </th>
+
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Underlying Illness
+                                    </th>
+
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Doctor's
+                                        Comments
+                                    </th>
+
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        CREATED ON</th>
+                                        Handled By
+                                    </th>
+
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        ACTION</th>
+                                        CREATED ON
+                                    </th>
+
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        ACTION
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,52 +60,32 @@
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->weight }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->diagnosis }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->height }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->provisional_diagnosis }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->bmi }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->comments }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->blood_pressure }}</h6>
+                                                    <h6 class="text-sm">{{ $consultation->created_by }}</h6>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->pulse_rate }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->blood_sugar }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-3 py-3">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm">{{ $consultation->temperature }}</h6>
-                                                </div>
-                                            </div>
-                                        </td>
+
                                         <td>
                                             <div class="d-flex px-3 py-3">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -117,18 +106,18 @@
                                                     <ul class="dropdown-menu"
                                                         aria-labelledby="menu-{{ $consultation->id }}">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.user-diagnosis', ['id' => $consultation->id]) }}">View
-                                                                Diagnosis</a></li>
+                                                                href="{{ route('admin.user-labtest', ['id' => $consultation->id]) }}">View
+                                                                Lab Result</a></li>
                                         @endif
                                         {{--                                               <li><a class="dropdown-item" --}}
                                         {{--                                                      href="">create lab test</a></li> --}}
                                         {{--                                               <li><a class="dropdown-item" --}}
                                         {{--                                                      href="">lab test result</a></li> --}}
 
-                                        @if ($role->onlyRoles('admin', 'doctor',))
+                                        @if ($role->onlyRoles('admin', 'doctor'))
                                             <li><a class="dropdown-item"
-                                                    href="{{ route('admin.add-diagnosis', ['id' => $consultation->id]) }}">
-                                                    Create Diagnosis </a></li>
+                                                    href="{{ route('admin.add-labtest', ['id' => $consultation->id]) }}">
+                                                    Create Lab-Test </a></li>
                                             <li><a class="dropdown-item text-danger"
                                                     href="{{ route('admin.deleteconsultation', ['id' => $consultations[0]->id]) }}">Delete</a>
                                             </li>

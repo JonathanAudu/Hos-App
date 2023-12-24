@@ -7,11 +7,11 @@
     <div class="col-12">
         <div class="card border-0 shadow">
             <div class="card-header text-center pt-4">
-                <h5>Add Lab Test For {{$diagnosis->consultation->user->name}}</h5>
+                <h5>Add Lab Test For {{$consultation->examination->user->name}}</h5>
             </div>
             @if (session('error'))
             <div class="alert alert-danger text-center">
-                <h4>Lab Result already created for this user Diagnosis</h4>
+                <h4>Lab Result already created for this user Consultation/Diagnosis</h4>
             </div>
             @endif
             @if (session('success'))
@@ -35,7 +35,7 @@
             <div class="card-body">
                 <form role="form" action="{{ route('admin.labtest.create') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="diagnosis_id" value="{{$diagnosis->id}}">
+                    <input type="hidden" name="consultation_id" value="{{$consultation->id}}">
 
                     <div class="mb-3">
                         <label for="test_name" class="form-label">Lab Test Name</label>

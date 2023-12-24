@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('drug_id');
-            $table->string('comments');
+            $table->string('comments')->nullable();
             $table->string('dosage');
             $table->string('created_by');
-            $table->string('handled_by')->nullable();
             $table->timestamps();
         });
     }

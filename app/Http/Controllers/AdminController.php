@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\LabTest;
 use App\Models\Payment;
 use App\Models\FollowUp;
+use App\Models\Examination;
 use App\Models\UserPayment;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
@@ -50,34 +51,53 @@ class AdminController extends Controller
             ->orderBy('users.created_at', 'desc')
             ->paginate(5);
 
-        $consultation_count = Consultation::when(!$this->auth->allowRoles('admin'), function ($query) {
+        $examination_count = Examination::when(!$this->auth->allowRoles('admin'), function ($query) {
             $query->where('created_by', auth()->id());
         })->count();
 
-        $consultations = Consultation::join('users', 'consultations.user_id', '=', 'users.id')
-            ->join('users as medical', 'consultations.created_by', '=', 'medical.id')
+        $examinations = Examination::join('users', 'examinations.user_id', '=', 'users.id')
+            ->join('users as medical', 'examinations.created_by', '=', 'medical.id')
             ->when(!$this->auth->allowRoles('admin', 'front-desk', 'accountant', 'nurse', 'doctor', 'lab-scientist', 'pharmacy'), function ($query) {
                 $query->where('users.created_by', auth()->id());
             })
             ->select([
                 'users.name', 'users.email', 'users.phone', 'users.gender', 'users.dob', 'users.state', 'users.user_id',
-                'consultations.weight', 'consultations.height', 'consultations.bmi', 'consultations.blood_pressure', 'consultations.pulse_rate', 'consultations.blood_sugar', 'consultations.temperature', 'consultations.created_at',
-                'consultations.id', 'medical.name as medical_name', 'consultations.user_id'
+                'examinations.weight', 'examinations.height', 'examinations.bmi', 'examinations.blood_pressure', 'examinations.pulse_rate', 'examinations.blood_sugar', 'examinations.temperature', 'examinations.created_at',
+                'examinations.id', 'medical.name as medical_name', 'examinations.user_id'
+            ])
+            ->orderBy('examinations.created_at', 'desc')
+            ->paginate(5);
+
+        $consultations = Consultation::join('examinations', 'consultations.examination_id', '=', 'examinations.id')
+            ->join('users', 'examinations.user_id', '=', 'users.id')
+            ->join('users as medical', 'consultations.created_by', '=', 'medical.id') // Corrected join condition
+            ->when(!$this->auth->allowRoles('admin', 'front-desk', 'accountant', 'nurse', 'doctor', 'lab-scientist', 'pharmacy'), function ($query) {
+                $query->where('users.created_by', auth()->id());
+            })
+            ->select([
+                'users.name', 'users.email', 'users.phone', 'users.gender', 'users.dob', 'users.state', 'users.user_id',
+                'examinations.weight', 'examinations.height', 'examinations.bmi', 'examinations.blood_pressure', 'examinations.pulse_rate', 'examinations.blood_sugar', 'examinations.temperature', 'examinations.created_at',
+                'consultations.diagnosis', 'consultations.provisional_diagnosis', 'consultations.comments', 'consultations.created_at as consultation_created_at',
+                'consultations.id', 'medical.name as medical_name', 'examinations.user_id'
             ])
             ->orderBy('consultations.created_at', 'desc')
             ->paginate(5);
 
-            $labTestCount = LabTest::count();
-            $drugCount = Drug::count();
+
+        $labTestCount = LabTest::count();
+        $drugCount = Drug::count();
+        $consultationCount = Consultation::count();
 
         return view('admin.indexadmin', compact(
             'user_count',
             'staff_count',
             'users',
-            'consultation_count',
+            'examination_count',
+            'examinations',
             'consultations',
             'labTestCount',
             'drugCount',
+            'consultationCount',
         ));
     }
 
@@ -168,8 +188,8 @@ class AdminController extends Controller
     {
 
         switch ($type) {
-            case 'consultation':
-                Consultation::destroy($id);
+            case 'examination':
+                Examination::destroy($id);
                 return back()->with('success', 'success.');
                 break;
 
@@ -215,7 +235,7 @@ class AdminController extends Controller
 
     public function getUser($id)
     {
-        $user = User::with('consultations')->find($id);
+        $user = User::with('examinations')->find($id);
 
         return view('admin.user-profile', compact('user'));
     }

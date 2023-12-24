@@ -36,7 +36,7 @@
                                     <td>
                                         <div class="d-flex px-3 py-3">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">{{$prescription->handled_by}}</h6>
+                                                <h6 class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">{{$prescription->created_by}}</h6>
                                             </div>
                                         </div>
                                     </td>

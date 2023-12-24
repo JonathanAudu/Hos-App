@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Helpers\AuthHelper;
 use App\Models\Consultation;
+use App\Models\Examination;
 use App\Models\Diagnosis;
 use App\Models\Drug;
 use App\Models\LabTest;
@@ -25,16 +26,29 @@ class UserController extends Controller
 
     public function index()
     {
-        $consultationCount = Consultation::where('user_id', auth()->id())->count();
+        $examinationCount = Examination::where('user_id', auth()->id())->count();
 
-        $consultations = Consultation::with(['user', 'createdBy'])
+        $examinations = Examination::with(['user', 'createdBy'])
             ->where('user_id', auth()->id())
             ->get();
 
-        return view('admin.indexuser', compact('consultationCount', 'consultations'));
+        return view('admin.indexuser', compact('examinationCount', 'examinations'));
     }
 
 
+
+
+    public function viewexaminations()
+    {
+
+        $userId = auth()->id();
+
+        $examinations = Examination::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.viewuserexaminations', compact('examinations'));
+    }
 
 
     public function viewconsultations()
@@ -42,7 +56,7 @@ class UserController extends Controller
 
         $userId = auth()->id();
 
-        $consultations = Consultation::where('user_id', $userId)
+        $consultations = Consultation::where('examination_id', $userId)
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -51,12 +65,12 @@ class UserController extends Controller
 
 
 
-    public function show($consultation_id)
+    public function show($examination_id)
     {
-        $consultation = Consultation::with('diagnosis')->findOrFail($consultation_id);
-        $diagnosis = $consultation->diagnosis;
-        //        dd($diagnosis->examination);
-        return view('admin.showdiagnosis', compact('consultation', 'diagnosis'));
+        $examination = Examination::findOrFail($examination_id);
+        $consultation = $examination->consultation->first();
+            //    dd($consultation->diagnosis);
+        return view('admin.showdiagnosis', compact('examination', 'consultation'));
     }
 
 
@@ -65,13 +79,13 @@ class UserController extends Controller
 
     public function labResult($id)
     {
-        $labtest = LabTest::where('diagnosis_id', $id)->first();
-        $diagnosis = Diagnosis::with('consultation')->find($id);
-        $lab = $labtest->diagnosis;
+        $labtest = LabTest::where('consultation_id', $id)->first();
+        $consultation = Consultation::with('examination')->find($id);
+        $lab = $labtest->consultation->examination;
 
-        //                dd($lab->consultation->user->name);
+                    //    dd($lab->user->name);
 
-        return view('admin.showlabresult', compact('labtest', 'diagnosis', 'lab'));
+        return view('admin.showlabresult', compact('labtest', 'consultation', 'lab'));
     }
     public function download($id)
     {
@@ -107,10 +121,10 @@ class UserController extends Controller
 
     public function viewdrugprescription($id)
     {
-        $labtest = LabTest::with('diagnosis')->find($id);
+        $labtest = LabTest::with('consultation')->find($id);
         $drug = Drug::where('labtest_id', $id)->first();
         $prescription = Prescription::where('drug_id', $drug->id)->first();
-        $drugUser = $labtest->diagnosis->consultation;
+        $drugUser = $labtest->consultation->examination;
         //        dd($prescription);
 
         return view('admin.showdrugprescription', compact('drug', 'prescription', 'labtest', 'drugUser'));

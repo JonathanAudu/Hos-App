@@ -5,8 +5,8 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h5 class="mb-0 text-center">Test Result for {{ $lab->consultation->user->name }}</h5>
-                    <h5 class="mb-0 text-center">Consultation Number: {{ $lab->consultation->consult_id }}</h5>
+                    <h5 class="mb-0 text-center">Test Result for {{ $lab->user->name }}</h5>
+                    <h5 class="mb-0 text-center">Consultation Number: {{ $lab->consult_id }}</h5>
                     <hr>
                 </div>
 

@@ -12,19 +12,19 @@ class Consultation extends Model
     protected $guarded = [];
 
 
-    public function user()
+    public function examination()
     {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function diagnosis()
-    {
-        return $this->hasOne(Diagnosis::class);
+        return $this->belongsTo(Examination::class, 'examination_id');
     }
 
     public function userpayments()
     {
         return $this->hasMany(UserPayment::class);
+    }
+
+    public function labtests()
+    {
+        return $this->hasOne(Consultation::class);
     }
 
     public function createdBy()

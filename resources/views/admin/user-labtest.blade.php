@@ -6,9 +6,9 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    @if ($diagnosis)
-                        <h6 class="mb-0 text-center">Lab Result Details for {{ $diagnosis->consultation->user->name }} </h6>
-                        <h6 class="mb-0 text-center">Consultation Number: {{ $diagnosis->consultation->consult_id }}</h6>
+                    @if ($consultation)
+                        <h6 class="mb-0 text-center">Lab Result Details for {{ $consultation->examination->user->name }} </h6>
+                        <h6 class="mb-0 text-center">Consultation Number: {{ $consultation->examination->consult_id }}</h6>
                         <hr>
                     @endif
                     @if (session('updated'))

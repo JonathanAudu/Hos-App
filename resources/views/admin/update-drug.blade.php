@@ -31,6 +31,10 @@
                             <label for="name" class="form-label">NAME OF DRUG(S)</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $drug->name) }}">
                         </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">COMMENTS</label>
+                            <input type="text" class="form-control" id="comments" name="comments" value="{{ old('comments', $drug->comments) }}">
+                        </div>
 
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary my-4 mb-2">Update Drug </button>
